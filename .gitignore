@@ -1,0 +1,9 @@
+# Logs
+*.log
+npm-debug.log*
+
+# Build folder
+build/*
+
+# NPM
+node_modules
