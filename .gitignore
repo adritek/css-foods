@@ -3,7 +3,7 @@
 npm-debug.log*
 
 # Build folder
-app/css/*
+app/css/
 
 # NPM
 node_modules
