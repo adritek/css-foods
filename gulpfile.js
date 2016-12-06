@@ -1,15 +1,14 @@
+// https://css-tricks.com/gulp-for-beginners/ to set up
+
 var gulp = require('gulp');
-var rename = require('gulp-rename');
-var uglify = require('gulp-uglify');
+var sass = require('gulp-sass');
+// var uglify = require('gulp-uglify');
 
 var DEST = 'build/';
 
-gulp.task('default', function() {
-  return gulp.src('foo.js')
-    // This will output the non-minified version
-    .pipe(gulp.dest(DEST))
-    // This will minify and rename to foo.min.js
-    .pipe(uglify())
-    .pipe(rename({ extname: '.min.js' }))
-    .pipe(gulp.dest(DEST));
+gulp.task('sass', function(){
+  return gulp.src('app/scss/styles.scss')
+  .pipe(sass()) // src through gulp-sass
+  .pipe(gulp.dest('app/css'))
+  console.log("Build complete!");
 });
