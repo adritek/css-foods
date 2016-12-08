@@ -2,13 +2,29 @@
 
 var gulp = require('gulp');
 var sass = require('gulp-sass');
-// var uglify = require('gulp-uglify');
+var browserSync = require('browser-sync').create();
 
-var DEST = 'build/';
+// watch task
+gulp.task('watch', ['browserSync', 'sass'], function(){
+  gulp.watch('app/scss/**/*.scss', ['sass'])
+});
 
+// sass build
 gulp.task('sass', function(){
-  return gulp.src('app/scss/styles.scss')
-  .pipe(sass()) // src through gulp-sass
+  return gulp.src('app/scss/**/*.scss')
+  .pipe(sass().on('error', sass.logError)) // src through gulp-sass
   .pipe(gulp.dest('app/css'))
+  .pipe(browserSync.reload({
+    stream:true
+  }))
   console.log("Build complete!");
 });
+
+// browser-sync reload
+gulp.task('browserSync',function(){
+  browserSync.init({
+    server: {
+      baseDir: 'app'
+    },
+  })
+})
