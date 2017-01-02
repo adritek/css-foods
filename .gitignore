@@ -5,5 +5,8 @@ npm-debug.log*
 # Build folder
 app/css/
 
+# Dist
+dist
+
 # NPM
 node_modules
