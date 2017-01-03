@@ -9,6 +9,7 @@ var gulpIf = require('gulp-if');
 var cssnano = require('gulp-cssnano');
 var imagemin = require('gulp-imagemin');
 var cache = require('gulp-cache');
+var del = require('del');
 
 // watch task
 gulp.task('watch', ['browserSync', 'sass'], function(){
@@ -20,10 +21,8 @@ gulp.task('watch', ['browserSync', 'sass'], function(){
 // imagemin
 gulp.task('images', function(){
   return gulp.src('app/images/**/*.+(png|jpg|jpeg|gif|svg)')
-  .pipe(cache(imagemin([
-    interlaced: true
-  ])))
-  .pipe gulp.dest('dist/images')
+  .pipe(cache(imagemin.gifsicle()))
+  .pipe(gulp.dest('dist/images'))
 });
 
 // useref
@@ -52,4 +51,15 @@ gulp.task('sass', function(){
   .pipe(sass().on('error', sass.logError)) // src through gulp-sass
   .pipe(gulp.dest('app/css'))
   .pipe(browserSync.stream());
+});
+
+// fonts
+gulp.task('fonts', function(){
+  return gulp.src('app/fonts/**/*')
+  .pipe(gulp.dest('dist/fonts'))
+});
+
+// del task cleans up unused files
+gulp.task('clean:dist', function(){
+  return del.sync('dist');
 });
