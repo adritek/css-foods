@@ -10,6 +10,19 @@ var cssnano = require('gulp-cssnano');
 var imagemin = require('gulp-imagemin');
 var cache = require('gulp-cache');
 var del = require('del');
+var runSequence = require('run-sequence');
+
+// build task = dev
+gulp.task('default', function(){
+  runSequence(['sass', 'browserSync', 'watch'])
+});
+
+// build task = dist
+gulp.task('dist', function(){
+  runSequence('clean:dist',
+    ['sass', 'useref', 'images', 'fonts']
+  )
+});
 
 // watch task
 gulp.task('watch', ['browserSync', 'sass'], function(){
@@ -30,7 +43,7 @@ gulp.task('useref', function() {
   return gulp.src('app/*.html')
   .pipe(useref())
   .pipe(gulpIf('*.js', uglify())) // Mins only js files
-  .pipe(gulpIf('*.css', cssnano()))
+  .pipe(gulpIf('*.css', cssnano())) // Mins scss
   .pipe(gulp.dest('dist'))
 });
 
